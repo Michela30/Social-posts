@@ -8,7 +8,8 @@ const posts = [
             "image": "https://unsplash.it/300/300?image=15"
         },
         "likes": 80,
-        "created": "2021-06-25"
+        "created": "2021-06-25",
+        "isLiked": false
     },
     {
         "id": 2,
@@ -19,7 +20,8 @@ const posts = [
             "image": "https://unsplash.it/300/300?image=10"
         },
         "likes": 120,
-        "created": "2021-09-03"
+        "created": "2021-09-03",
+        "isLiked": false
     },
     {
         "id": 3,
@@ -30,7 +32,8 @@ const posts = [
             "image": "https://unsplash.it/300/300?image=20"
         },
         "likes": 78,
-        "created": "2021-05-15"
+        "created": "2021-05-15",
+        "isLiked": false
     },
     {
         "id": 4,
@@ -38,10 +41,11 @@ const posts = [
         "media": "https://unsplash.it/600/400?image=24",
         "author": {
             "name": "Luca Formicola",
-            "image": 'null' //null 
+            "image": null 
         },
         "likes": 56,
-        "created": "2021-04-03"
+        "created": "2021-04-03",
+        "isLiked": false
     },
     {
         "id": 5,
@@ -52,48 +56,93 @@ const posts = [
             "image": "https://unsplash.it/300/300?image=29"
         },
         "likes": 95,
-        "created": "2021-03-05"
+        "created": "2021-03-05",
+        "isLiked": false
     }
 ];
 
-const container = document.getElementById('container');
-container.classList.add('posts-list')
 
-for(let i = 0; i < posts.length; i++){
-    console.log(posts[i])
 
-   
-    container.innerHTML += `
-    <div class="post">
-    <div class="post__header">
-        <div class="post-meta">                    
-            <div class="post-meta__icon">
-                <img class="profile-pic" src="${posts[i]['author'].image}" alt="Phil Mangione">                    
+function refresh (){
+    const container = document.getElementById('container');
+    container.classList.add('posts-list')
+
+    container.innerHTML = ''
+
+    for(let i = 0; i < posts.length; i++){
+        //console.log(posts[i])
+
+        let classeLiked = ''
+
+        if(posts[i].isLiked) {
+            classeLiked = 'like-button--liked'
+        }
+
+    
+        container.innerHTML += `
+        <div class="post">
+        <div class="post__header">
+            <div class="post-meta">                    
+                <div class="post-meta__icon">
+                    <img class="profile-pic" src="${posts[i]['author'].image}" alt="Phil Mangione">                    
+                </div>
+                <div class="post-meta__data">
+                    <div class="post-meta__author">${posts[i]['author'].name}</div>
+                    <div class="post-meta__time">${posts[i].created}</div>
+                </div>                    
             </div>
-            <div class="post-meta__data">
-                <div class="post-meta__author">${posts[i]['author'].name}</div>
-                <div class="post-meta__time">${posts[i].created}</div>
-            </div>                    
         </div>
+        <div class="post__text">${posts[i].content}</div>
+        <div class="post__image">
+            <img src="${posts[i].media}" alt="">
+        </div>
+        <div class="post__footer">
+            <div class="likes js-likes">
+                <div class="likes__cta">
+                    <a class="like-button js-like-button ${classeLiked}" href="#" data-postid="${posts[i].id}">
+                        <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+                        <span class="like-button__label">Mi Piace</span>
+                    </a>
+                </div>
+                <div class="likes__counter">
+                    Piace a <b id="like-counter-${posts[i].id}" class="js-likes-counter">${posts[i].likes}</b> persone
+                </div>
+            </div> 
+        </div>            
     </div>
-    <div class="post__text">${posts[i].content}</div>
-    <div class="post__image">
-        <img src="${posts[i].media}" alt="">
-    </div>
-    <div class="post__footer">
-        <div class="likes js-likes">
-            <div class="likes__cta">
-                <a class="like-button  js-like-button" href="#" data-postid="${posts[i].id}">
-                    <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
-                    <span class="like-button__label">Mi Piace</span>
-                </a>
-            </div>
-            <div class="likes__counter">
-                Piace a <b id="like-counter-${posts[i].id}" class="js-likes-counter">${posts[i].likes}</b> persone
-            </div>
-        </div> 
-    </div>            
-</div>
-    `
+        `
 
+    }
+
+    const postsLiked = []; 
+
+    document.querySelectorAll('.js-like-button')
+        .forEach((likeButton, index) => {
+            likeButton.addEventListener('click', function(e){
+                e.preventDefault()
+
+                console.log('cliccato')
+
+                
+                if(!this.classList.contains('like-button--liked')){
+
+                    // incrementa il contatore dei likes
+                    posts[index].likes++;
+                
+                    // push nel nuovo array gli id dei post piacizzati
+                    postsLiked.push[posts[index].id]
+    
+                }
+
+                console.log('cliccato il post : ', posts[index])
+                
+                posts[index].isLiked = !posts[index].isLiked;
+                
+                refresh();
+            
+            });
+        })
 }
+
+refresh();
+
