@@ -62,23 +62,6 @@ const posts = [
 ];
 
 
-function makeInitial(name) {
-    // split
-    const text = "Luca Formicola";
-
-    const letter = text.charAt(0)
-    const letter2 = text.charAt(5)
-
-    const joined = text.join(letter, letter2);
-
-    return `
-        <div class="iniziali">
-            <div>${joined}</div>
-        </div>
-    `
-}
-
-
 function refresh (){
     const container = document.getElementById('container');
     container.classList.add('posts-list')
@@ -86,22 +69,38 @@ function refresh (){
     container.innerHTML = ''
 
     for(let i = 0; i < posts.length; i++){
-        //console.log(posts[i])
 
+        //crea img profilo account
+        const imgProfile = `<img class="profile-pic" src="${posts[i]['author'].image}" alt="${posts[i]['author'].image}">`;
+        
+        //controllo chiave isliked
         let classeLiked = ''
 
         if(posts[i].isLiked) {
             classeLiked = 'like-button--liked'
         }
+        const initialsElement = makeInitial(posts[i].author.name);   
+        
+        
 
-    
-        container.innerHTML += `
+        ////-----<img class="profile-pic" src="${posts[i]['author'].image}" alt="${posts[i]['author'].image}">///
+        let newPost = `
+        
         <div class="post">
         <div class="post__header">
-            <div class="post-meta">                    
-                <div class="post-meta__icon">
-                    <img class="profile-pic" src="${posts[i]['author'].image}" alt="Phil Mangione">                    
-                </div>
+        <div class="post-meta">                    
+        <div class="post-meta__icon">`
+
+        //controllo se la image è null o no
+        if(posts[i].author.image === null){
+            newPost += initialsElement;
+        }else{            
+            newPost += imgProfile;
+        }
+       
+        
+        newPost += `
+        </div>
                 <div class="post-meta__data">
                     <div class="post-meta__author">${posts[i]['author'].name}</div>
                     <div class="post-meta__time">${posts[i].created}</div>
@@ -126,8 +125,9 @@ function refresh (){
             </div> 
         </div>            
     </div>
-        `
-
+    `
+    container.innerHTML += newPost;
+        
     }
 
     const postsLiked = []; 
@@ -136,8 +136,6 @@ function refresh (){
         .forEach((likeButton, index) => {
             likeButton.addEventListener('click', function(e){
                 e.preventDefault()
-
-                console.log('cliccato')
 
                 
                 if(!this.classList.contains('like-button--liked')){
@@ -151,8 +149,6 @@ function refresh (){
                 }else{
                     posts[index].likes--;
                 }
-
-                console.log('cliccato il post : ', posts[index])
                 
                 posts[index].isLiked = !posts[index].isLiked;
                 
@@ -160,7 +156,29 @@ function refresh (){
             
             });
         })
+
+
 }
 
 refresh();
 
+//functions
+
+
+function makeInitial(name) {
+    // split
+    const splitName = name.split(' ');
+    const nome = splitName[0];
+    const cognome = splitName[1];
+    const letter = nome.charAt(0)
+    const letter2 = cognome.charAt(0)
+    const letters = [letter,letter2];
+    //join
+    const joined = letters.join('');
+
+    return `
+        <div class="iniziali">
+            <div>${joined}</div>
+        </div>
+    `
+}

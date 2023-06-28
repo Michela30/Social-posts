@@ -126,7 +126,12 @@ h1 {
 }
 
 .iniziali{
-    background-color: blueviolet;
+    background-color: lightseagreen;
     color: white;
-    font-size: medium;
+    font-size: 2em;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 60px;
 }
