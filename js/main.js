@@ -74,22 +74,19 @@ function refresh (){
         const imgProfile = `<img class="profile-pic" src="${posts[i]['author'].image}" alt="${posts[i]['author'].image}">`;
         
         //controllo chiave isliked
-        let classeLiked = ''
+        let classeLiked = '';
 
         if(posts[i].isLiked) {
-            classeLiked = 'like-button--liked'
+            classeLiked = 'like-button--liked';
         }
         const initialsElement = makeInitial(posts[i].author.name);   
         
         
-
-        ////-----<img class="profile-pic" src="${posts[i]['author'].image}" alt="${posts[i]['author'].image}">///
         let newPost = `
-        
         <div class="post">
         <div class="post__header">
         <div class="post-meta">                    
-        <div class="post-meta__icon">`
+        <div class="post-meta__icon">`;
 
         //controllo se la image è null o no
         if(posts[i].author.image === null){
@@ -144,7 +141,7 @@ function refresh (){
                     posts[index].likes++;
                 
                     // push nel nuovo array gli id dei post piacizzati
-                    postsLiked.push[posts[index].id]
+                    postsLiked.push[posts[index].id];
     
                 }else{
                     posts[index].likes--;
@@ -170,8 +167,8 @@ function makeInitial(name) {
     const splitName = name.split(' ');
     const nome = splitName[0];
     const cognome = splitName[1];
-    const letter = nome.charAt(0)
-    const letter2 = cognome.charAt(0)
+    const letter = nome.charAt(0);
+    const letter2 = cognome.charAt(0);
     const letters = [letter,letter2];
     //join
     const joined = letters.join('');
