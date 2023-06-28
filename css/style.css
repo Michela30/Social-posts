@@ -97,6 +97,7 @@ h1 {
     width: 100%;
 }
 
+
 .likes {
     display: flex;
     justify-content: space-around;
@@ -122,4 +123,10 @@ h1 {
 .like-button--liked {
     color: #0CD977;
     cursor: default;
+}
+
+.iniziali{
+    background-color: blueviolet;
+    color: white;
+    font-size: medium;
 }

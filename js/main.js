@@ -62,6 +62,22 @@ const posts = [
 ];
 
 
+function makeInitial(name) {
+    // split
+    const text = "Luca Formicola";
+
+    const letter = text.charAt(0)
+    const letter2 = text.charAt(5)
+
+    const joined = text.join(letter, letter2);
+
+    return `
+        <div class="iniziali">
+            <div>${joined}</div>
+        </div>
+    `
+}
+
 
 function refresh (){
     const container = document.getElementById('container');
@@ -132,6 +148,8 @@ function refresh (){
                     // push nel nuovo array gli id dei post piacizzati
                     postsLiked.push[posts[index].id]
     
+                }else{
+                    posts[index].likes--;
                 }
 
                 console.log('cliccato il post : ', posts[index])
